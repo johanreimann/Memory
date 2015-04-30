@@ -3,6 +3,8 @@
 use App\Player;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Input;
+use Redirect;
 
 use Illuminate\Http\Request;
 
@@ -23,8 +25,8 @@ class PlayersController extends Controller {
 				return $value['score'];
 			}));
 			
-			//This is really a retarded way to do it, but could'nt figure out
-			//how to sort the array by descending order.
+			//This is really a retarded way to do it, but could not figure out
+			//how to sort the array by descending order in a nice way for the moment.
 			$players = array_reverse($players);
 			return view('players.index', compact('players'));
 	}
@@ -36,7 +38,7 @@ class PlayersController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('players.create');
 	}
 
 	/**
@@ -46,7 +48,10 @@ class PlayersController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::all();
+		Player::create( $input );
+ 
+		return Redirect::route('players.index')->with('message', 'Highscore stored');
 	}
 
 	/**
