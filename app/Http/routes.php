@@ -23,3 +23,6 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+route::resource('players', 'PlayersController');
+route::model('players', 'Player');
