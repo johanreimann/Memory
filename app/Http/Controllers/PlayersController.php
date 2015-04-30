@@ -15,6 +15,13 @@ class PlayersController extends Controller {
 	 *
 	 * @return Response
 	 */
+	 
+	protected $rules = [
+		'name' => ['required', 'min:3'],
+		'score' => ['required'],
+	];
+	
+	
 	public function index()
 	{
 			$players = Player::all();
@@ -46,8 +53,16 @@ class PlayersController extends Controller {
 	 *
 	 * @return Response
 	 */
+	 
+	public function calculateScore()
+	{
+		//TODO: Add functionality to calculate score
+	}
+	
 	public function store()
 	{
+		
+		$this->validate($request, $this->rules);
 		$input = Input::all();
 		Player::create( $input );
  
