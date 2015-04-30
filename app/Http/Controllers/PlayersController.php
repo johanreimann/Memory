@@ -16,6 +16,16 @@ class PlayersController extends Controller {
 	public function index()
 	{
 			$players = Player::all();
+			
+			//Should this really be done in the controller? I'm not 100%
+			$players = array_values(array_sort($players, function($value)
+			{
+				return $value['score'];
+			}));
+			
+			//This is really a retarded way to do it, but could'nt figure out
+			//how to sort the array by descending order.
+			$players = array_reverse($players);
 			return view('players.index', compact('players'));
 	}
 
