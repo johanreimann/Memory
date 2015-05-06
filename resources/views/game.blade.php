@@ -18,7 +18,6 @@
 					}
 					?>
 					@endforeach
-
 					</table>
 					</td>
 					<td>
@@ -26,5 +25,15 @@
 		</table>
 	</form>
 </center>
+
+<script type="text/javascript">
+$("img").click(function(){
+	x = $(this).attr('name');
+	var b = {{ $pokes[1] }}
+	$(this).attr('src', 'images/A.png');
+	console.log({{ $pokes[1] }});
+});
+
+</script>
 
 @stop

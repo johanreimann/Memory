@@ -16,4 +16,13 @@ class gameController extends Controller {
 
 		return view('game', compact('pokes'));
 	}
+
+	public function clicked()
+	{
+		$url = "images/A.png";
+		//return 'hello world';
+		return gameController::test(); 
+	}
 }
+
+
