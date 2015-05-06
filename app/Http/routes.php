@@ -17,7 +17,8 @@ Route::get('contact', 'WelcomeController@contact');
 
 Route::get('game', 'GameController@test');
 
-Route::get('game', 'GameController@clicked');
+Route::post('game', 'GameController@clicked');
+
 
 Route::get('home', 'HomeController@index');
 
