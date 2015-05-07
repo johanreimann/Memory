@@ -1,6 +1,8 @@
 /* global imgs1 */
 $(document).ready(function(){
     imgs1 = $(this).find('img');
+    counter = 0;
+  
   $('img').click(function(){   
     x = $(this).attr('name');
     c = $(this);
@@ -15,22 +17,27 @@ $(document).ready(function(){
        //console.log(data['check'])
        //console.log(data['count']);
        //console.log($(data['old']));
-        
-          	console.log(imgs1);
+       console.log(data['score']);
            
         if((data['count'] % 2) && (data['check'] == 0))
         {
+         
           setTimeout(function() {
             c.attr('src', 'images/tweety.png'); 
             imgs1[data['old']-1].src = 'images/tweety.png';
-          }, 2000);
-        }
+            
          
-      
+            
+          }, 2000);
+       
+
+        }
+
+         
+
            
       }
     });  
 
-  }); 
-    
+  });  
 });

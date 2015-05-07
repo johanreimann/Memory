@@ -21,8 +21,10 @@ class gameController extends Controller {
 		$count = 1;
 		$score = 0;
 		$check = 0;
+		$attempt = 0;
 		Session::put('count', $count);
 		Session::put('score', $score);
+		Session::put('nrattempt', $attempt);
 
 		Session:put('name', 'hej');
 
@@ -35,6 +37,7 @@ class gameController extends Controller {
 		$count = Session::get('count');
 		$score = Session::get('score');
 		$name = Session::get('name');
+		$attempt = Session::get('nrattempt');
 		$oldvalue = 0;
 		
 		 if(Request::ajax()) {
@@ -45,19 +48,28 @@ class gameController extends Controller {
 			 $check = 0;
 			 if((strcmp($value[intval($data['value'])], $value[intval($name)]) == 0))
 			 {
-			 	$score++;
-				$check = 1;	
+			 	$score += (10-$attempt*2) + 2;
+				$check = 1;
+				$attempt = 0;
 			 }
-			 
+		  	 
 			 if($count == 2)
+			 {
 			 	$count = 0;
-				 
+				 if($check != 1)
+				 {
+				 	$attempt++;
+				 }				 
+			 }	 
+			 
+			
+			
 			 Session::put('count', $count);
 			 Session::put('score', $score);
+			 Session::put('nrattempt', $attempt);
      		 return response()->json(['name' => $value[intval($data['value'])], 'count' => $count, 
-		  							  'score' => $score, 'test1' => $value[intval($data['value'])], 
-									  'test2' => $value[intval($name)], 'check' => $check, 
-									  'old' =>  $name]);
+		  							  'score' => $score, 'check' => $check, 'old' =>  $name,
+										'attempt' => $attempt]);
 	  		
     	}	
 	}
