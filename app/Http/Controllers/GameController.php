@@ -16,7 +16,7 @@ class gameController extends Controller {
 					   'images/Q.jpg', 'images/R.png', 'images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 
 					   'images/G.png', 'images/H.png', 'images/I.jpg', 'images/J.jpg', 'images/K.png', 'images/L.jpg', 'images/M.gif', 'images/N.gif', 
 					   'images/O.png', 'images/P.png', 'images/Q.jpg', 'images/R.png');
-		//shuffle($pokes);
+		shuffle($pokes);
 		Session::put('key', $pokes);
 		$count = 1;
 		$score = 0;
@@ -26,7 +26,7 @@ class gameController extends Controller {
 		Session::put('score', $score);
 		Session::put('nrattempt', $attempt);
 
-		Session:put('name', 'hej');
+		Session::put('name', ' ');
 
 		return view('game', compact('pokes'));
 	}
@@ -48,7 +48,9 @@ class gameController extends Controller {
 			 $check = 0;
 			 if((strcmp($value[intval($data['value'])], $value[intval($name)]) == 0))
 			 {
-			 	$score += (10-$attempt*2) + 2;
+			 	$score += (10-$attempt*2);
+			 	if($score < 1)
+			 		$score = 1;
 				$check = 1;
 				$attempt = 0;
 			 }
@@ -61,7 +63,6 @@ class gameController extends Controller {
 				 	$attempt++;
 				 }				 
 			 }	 
-			 
 			
 			
 			 Session::put('count', $count);
@@ -69,7 +70,7 @@ class gameController extends Controller {
 			 Session::put('nrattempt', $attempt);
      		 return response()->json(['name' => $value[intval($data['value'])], 'count' => $count, 
 		  							  'score' => $score, 'check' => $check, 'old' =>  $name,
-										'attempt' => $attempt]);
+									  'attempt' => $attempt]);
 	  		
     	}	
 	}
