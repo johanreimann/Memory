@@ -19,7 +19,6 @@ Route::get('game', 'GameController@test');
 
 Route::post('game', 'GameController@clicked');
 
-
 Route::get('home', 'HomeController@index');
 
 Route::controllers([

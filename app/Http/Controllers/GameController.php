@@ -4,8 +4,6 @@ use Response;
 use Request;
 use Session;
 
- 
-
 class gameController extends Controller {
 
 	public function test()
@@ -22,10 +20,11 @@ class gameController extends Controller {
 		$score = 0;
 		$check = 0;
 		$attempt = 0;
+		$done = array();
 		Session::put('count', $count);
 		Session::put('score', $score);
 		Session::put('nrattempt', $attempt);
-
+		Session::put('done', $done);
 		Session::put('name', ' ');
 
 		return view('game', compact('pokes'));
@@ -38,12 +37,20 @@ class gameController extends Controller {
 		$score = Session::get('score');
 		$name = Session::get('name');
 		$attempt = Session::get('nrattempt');
-		$oldvalue = 0;
+		$done = Session::get('done');
+		$oldvalue = -1;
 		
 		 if(Request::ajax()) {
-			 $count++;
      		 $data = Input::all();
-			 $oldvalue = $value[intval($name)];
+
+     		 // pressed earlier?
+     		 if(array_search($data['value'], $done) != FALSE)
+     		 	return response()->json();
+
+			 $count++;
+			 if($count == 1)
+			 	$oldvalue = $value[intval($name)];
+
 			 Session::put('name', $data['value']);
 			 $check = 0;
 			 if((strcmp($value[intval($data['value'])], $value[intval($name)]) == 0))
@@ -51,20 +58,21 @@ class gameController extends Controller {
 			 	$score += (10-$attempt*2);
 			 	if($score < 1)
 			 		$score = 1;
+
 				$check = 1;
 				$attempt = 0;
+				$done[] = $data['value'];
+			 	$done[] = $oldvalue;
 			 }
 		  	 
 			 if($count == 2)
 			 {
 			 	$count = 0;
 				 if($check != 1)
-				 {
-				 	$attempt++;
-				 }				 
+				 	$attempt++; 
 			 }	 
 			
-			
+			 Session::put('done', $done);
 			 Session::put('count', $count);
 			 Session::put('score', $score);
 			 Session::put('nrattempt', $attempt);

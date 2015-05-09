@@ -25,6 +25,7 @@
 		</table>
 	</form>
 </center>
+
 <div class="secure">Secure Login form</div>
 {!! Form::open(array('url'=>'account/login','method'=>'POST', 'id'=>'myform')) !!}
 <div class="control-group">
