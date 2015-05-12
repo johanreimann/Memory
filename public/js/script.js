@@ -9,13 +9,15 @@ $(document).ready(function(){
       x = $(this).attr('name');
       c = $(this);
       wait++;
-      console.log(wait);
+     // console.log(wait);
       $.ajax({
         url: 'game',
         type: 'post',
           data: {'value': x, '_token': $('input[name=_token]').val()},
         success: function(data){
           c.attr('src', data['name']);
+          
+        console.log(data['done']);
              
           if((data['count'] % 2) && (data['check'] == 0))
           {

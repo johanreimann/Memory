@@ -26,5 +26,6 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+route::get('players', 'PlayersController@index');
 route::resource('players', 'PlayersController');
 route::model('players', 'Player');

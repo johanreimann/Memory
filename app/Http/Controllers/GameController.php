@@ -3,6 +3,7 @@ use Input;
 use Response;
 use Request;
 use Session;
+use Redirect;
 
 class gameController extends Controller {
 
@@ -14,18 +15,20 @@ class gameController extends Controller {
 					   'images/Q.jpg', 'images/R.png', 'images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 
 					   'images/G.png', 'images/H.png', 'images/I.jpg', 'images/J.jpg', 'images/K.png', 'images/L.jpg', 'images/M.gif', 'images/N.gif', 
 					   'images/O.png', 'images/P.png', 'images/Q.jpg', 'images/R.png');
-		shuffle($pokes);
+		//shuffle($pokes);
 		Session::put('key', $pokes);
 		$count = 1;
 		$score = 0;
 		$check = 0;
 		$attempt = 0;
+		$tilesDone = -1;
 		$done = array();
 		Session::put('count', $count);
 		Session::put('score', $score);
 		Session::put('nrattempt', $attempt);
 		Session::put('done', $done);
 		Session::put('name', ' ');
+		Session::put('tilesDone', $tilesDone);
 
 		return view('game', compact('pokes'));
 	}
@@ -38,6 +41,7 @@ class gameController extends Controller {
 		$name = Session::get('name');
 		$attempt = Session::get('nrattempt');
 		$done = Session::get('done');
+		$tilesDone = Session::get('tilesDone');
 		$oldvalue = -1;
 		
 		 if(Request::ajax()) {
@@ -58,7 +62,7 @@ class gameController extends Controller {
 			 	$score += (10-$attempt*2);
 			 	if($score < 1)
 			 		$score = 1;
-
+				$tilesDone++;
 				$check = 1;
 				$attempt = 0;
 				$done[] = $data['value'];
@@ -71,14 +75,19 @@ class gameController extends Controller {
 				 if($check != 1)
 				 	$attempt++; 
 			 }	 
-			
+			 
+			 if($tilesDone === 3)
+			 {
+				
+			 }
+			 Session::put('tilesDone', $tilesDone);
 			 Session::put('done', $done);
 			 Session::put('count', $count);
 			 Session::put('score', $score);
 			 Session::put('nrattempt', $attempt);
      		 return response()->json(['name' => $value[intval($data['value'])], 'count' => $count, 
 		  							  'score' => $score, 'check' => $check, 'old' =>  $name,
-									  'attempt' => $attempt]);
+									  'attempt' => $attempt, 'done' => $tilesDone]);
 	  		
     	}	
 	}
