@@ -4,12 +4,20 @@ use Response;
 use Request;
 use Session;
 use Redirect;
+use App\Player;
+
 
 class gameController extends Controller {
-
+	
+	public function index()
+	{
+		return view('name');
+	}
 	public function test()
 	{
 
+		
+		
 		$pokes = array('images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 'images/G.png', 'images/H.png',
 					   'images/I.jpg', 'images/J.jpg', 'images/K.png', 'images/L.jpg', 'images/M.gif', 'images/N.gif', 'images/O.png', 'images/P.png',
 					   'images/Q.jpg', 'images/R.png', 'images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 
@@ -23,11 +31,13 @@ class gameController extends Controller {
 		$attempt = 0;
 		$tilesDone = -1;
 		$done = array();
+		
 		Session::put('count', $count);
 		Session::put('score', $score);
 		Session::put('nrattempt', $attempt);
 		Session::put('done', $done);
 		Session::put('name', ' ');
+		
 		Session::put('tilesDone', $tilesDone);
 
 		return view('game', compact('pokes'));
@@ -59,7 +69,7 @@ class gameController extends Controller {
 			 $check = 0;
 			 if((strcmp($value[intval($data['value'])], $value[intval($name)]) == 0))
 			 {
-			 	$score += (10-$attempt*2);
+			 	$score += GameController::calculateScore($attempt);
 			 	if($score < 1)
 			 		$score = 1;
 				$tilesDone++;
@@ -76,9 +86,14 @@ class gameController extends Controller {
 				 	$attempt++; 
 			 }	 
 			 
-			 if($tilesDone === 3)
+			 if($tilesDone === 2)
 			 {
-				
+				$input['name'] = Session::get('nick');
+				$input['score'] = $score;
+				Player::create($input);
+
+
+
 			 }
 			 Session::put('tilesDone', $tilesDone);
 			 Session::put('done', $done);
@@ -90,7 +105,17 @@ class gameController extends Controller {
 									  'attempt' => $attempt, 'done' => $tilesDone]);
 	  		
     	}	
+		
+		
+		
+		
+		
 	}
+	
+	public function calculateScore($attempt)
+		{
+			return  (10-$attempt*2);
+		}
 }
 
 

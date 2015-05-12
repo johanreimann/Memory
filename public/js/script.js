@@ -18,6 +18,13 @@ $(document).ready(function(){
           c.attr('src', data['name']);
           
         console.log(data['done']);
+        console.log(data['score']);
+        
+        if(data['score'] == 2)
+          	location.href="localhost:8000/players";
+
+
+        
              
           if((data['count'] % 2) && (data['check'] == 0))
           {

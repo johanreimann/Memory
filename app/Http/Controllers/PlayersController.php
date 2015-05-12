@@ -5,6 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Input;
 use Redirect;
+use Session;
 
 use Illuminate\Http\Request;
 
@@ -21,9 +22,9 @@ class PlayersController extends Controller {
 		'score' => ['required'],
 	];
 	
-	
 	public function index()
 	{
+		
 			$players = Player::all();
 			
 			//Should this really be done in the controller? I'm not 100%
@@ -38,79 +39,21 @@ class PlayersController extends Controller {
 			return view('players.index', compact('players'));
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
 	public function create()
 	{
 		return view('players.create');
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	 
-	public function calculateScore()
-	{
-		//TODO: Add functionality to calculate score
 	}
 	
 	public function store()
 	{
 		
-		$this->validate($request, $this->rules);
+		//$this->validate($request, $this->rules);
 		$input = Input::all();
-		Player::create( $input );
- 
-		return Redirect::route('players.index')->with('message', 'Highscore stored');
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		
+		$input['score'] = 55;
+		//Player::create( $input );
+ 		Session::put('nick', $input['name']);
+		return Redirect::to('game')->with('message', 'Highscore stored');
 	}
 
 }
