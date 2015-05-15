@@ -16,16 +16,14 @@ class gameController extends Controller {
 	public function test()
 	{
 
-		
-		
 		$pokes = array('images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 'images/G.png', 'images/H.png',
 					   'images/I.jpg', 'images/J.jpg', 'images/K.png', 'images/L.jpg', 'images/M.gif', 'images/N.gif', 'images/O.png', 'images/P.png',
 					   'images/Q.jpg', 'images/R.png', 'images/A.png', 'images/B.png', 'images/C.jpg', 'images/D.jpg', 'images/E.png', 'images/F.jpg', 
 					   'images/G.png', 'images/H.png', 'images/I.jpg', 'images/J.jpg', 'images/K.png', 'images/L.jpg', 'images/M.gif', 'images/N.gif', 
 					   'images/O.png', 'images/P.png', 'images/Q.jpg', 'images/R.png');
-		//shuffle($pokes);
+		shuffle($pokes);
 		Session::put('key', $pokes);
-		$count = 1	;
+		$count = 1;
 		$score = -10;
 		$check = 0;
 		$attempt = 0;
@@ -35,9 +33,7 @@ class gameController extends Controller {
 		Session::put('count', $count);
 		Session::put('score', $score);
 		Session::put('nrattempt', $attempt);
-		Session::put('done', $done);
 		Session::put('name', ' ');
-		
 		Session::put('tilesDone', $tilesDone);
 
 		return view('game', compact('pokes'));
@@ -50,7 +46,6 @@ class gameController extends Controller {
 		$score = Session::get('score');
 		$name = Session::get('name');
 		$attempt = Session::get('nrattempt');
-		$done = Session::get('done');
 		$tilesDone = Session::get('tilesDone');
 		$oldvalue = -1;
 		
@@ -70,8 +65,6 @@ class gameController extends Controller {
 				$tilesDone++;
 				$check = 1;
 				$attempt = 0;
-				$done[] = $data['value'];
-			 	$done[] = $oldvalue;
 			 }
 		  	 
 			 if($count == 2)
@@ -87,11 +80,8 @@ class gameController extends Controller {
 				$input['score'] = $score;
 				Player::create($input);
 
-
-
 			 }
 			 Session::put('tilesDone', $tilesDone);
-			 Session::put('done', $done);
 			 Session::put('count', $count);
 			 Session::put('score', $score);
 			 Session::put('nrattempt', $attempt);
@@ -100,11 +90,7 @@ class gameController extends Controller {
 									  'attempt' => $attempt, 'done' => $tilesDone]);
 	  		
     	}	
-		
-		
-		
-		
-		
+			
 	}
 	
 	public function calculateScore($attempt)
