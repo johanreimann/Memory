@@ -12,8 +12,7 @@
 <body>
 
 <select>
-	<option href="#" class="theme-link" data-theme="default">Default</option>
-	<option href="#" class="theme-link" data-theme="amelia">Amelia</option>
+	<option href="#" data-theme="default" class="theme-link">Default</option>
 	<option href="#" data-theme="cerulean" class="theme-link">Cerulean</option>
 	<option href="#" data-theme="cosmo" class="theme-link">Cosmo</option>
 	<option href="#" data-theme="cyborg" class="theme-link">Cyborg</option>
