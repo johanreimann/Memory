@@ -25,11 +25,11 @@ class gameController extends Controller {
 					   'images/O.png', 'images/P.png', 'images/Q.jpg', 'images/R.png');
 		//shuffle($pokes);
 		Session::put('key', $pokes);
-		$count = 1;
-		$score = 0;
+		$count = 1	;
+		$score = -10;
 		$check = 0;
 		$attempt = 0;
-		$tilesDone = -1;
+		$tilesDone = 0;
 		$done = array();
 		
 		Session::put('count', $count);
@@ -57,9 +57,6 @@ class gameController extends Controller {
 		 if(Request::ajax()) {
      		 $data = Input::all();
 
-     		 // pressed earlier?
-     		 if(array_search($data['value'], $done) != FALSE)
-     		 	return response()->json();
 
 			 $count++;
 			 if($count == 1)
@@ -70,8 +67,6 @@ class gameController extends Controller {
 			 if((strcmp($value[intval($data['value'])], $value[intval($name)]) == 0))
 			 {
 			 	$score += GameController::calculateScore($attempt);
-			 	if($score < 1)
-			 		$score = 1;
 				$tilesDone++;
 				$check = 1;
 				$attempt = 0;

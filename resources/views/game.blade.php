@@ -2,6 +2,11 @@
 
 @section('content')
 
+<div class="jumbotron">
+	<h1>Memory!</h1>
+	<p>Try to find all the pairs by clicking on the tweety-cards!</p>
+</div>
+
 <?php $counter = 0; ?>
 <center>
 	<form name=game>
@@ -26,19 +31,18 @@
 	</form>
 </center>
 
-<div class="secure">Secure Login form</div>
+<div class="secure" style="display: none;">Secure Login form</div>
 {!! Form::open(array('url'=>'account/login','method'=>'POST', 'id'=>'myform')) !!}
-<div class="control-group">
-  <div class="controls">
+<div class="control-group" style="display: none;">
+  <div class="controls" style="display: none;">
      {!! Form::text('email','',array('id'=>'','class'=>'form-control span6','placeholder' => 'Email')) !!}
   </div>
 </div>
-<div class="control-group">
-  <div class="controls">
+<div class="control-group" style="display: none;">
+  <div class="controls" style="display: none;">
   {!! Form::password('password',array('class'=>'form-control span6', 'placeholder' => 'Please Enter your Password')) !!}
   </div>
 </div>
-{!! Form::button('Login', array('class'=>'send-btn')) !!}
 {!! Form::close() !!}
 
 @stop
